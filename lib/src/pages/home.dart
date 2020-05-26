@@ -1,69 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:sharedpreferencesflutter/src/pages/settings.dart';
+
+import 'package:sharedpreferencesflutter/src/SharedPreferences/user_shared_preferences.dart';
+import 'package:sharedpreferencesflutter/src/widgets/menu_widget.dart';
 
 class HomePage extends StatelessWidget {
   static final String routeName = 'home';
+  final prefs = new SharedPreferencesUser();
 
   @override
   Widget build(BuildContext context) {
+    prefs.ultimaPagina = HomePage.routeName;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('User preferences'),
+        backgroundColor:
+            (prefs.colorSecundario) ? Colors.teal : Colors.deepOrange,
       ),
-      drawer: createMenu(context),
+      drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
-          Text('Color Secundario'),
+          Text('Color Secundario: ${prefs.colorSecundario}'),
           Divider(),
-          Text('Genero'),
+          Text('Genero: ${prefs.genero}'),
           Divider(),
-          Text('Nombre usuario'),
+          Text('Nombre usuario: ${prefs.nombre}'),
           Divider(),
-        ],
-      ),
-    );
-  }
-
-  Drawer createMenu(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Container(),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/back.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text('Home'),
-            onTap: () =>
-                Navigator.pushReplacementNamed(context, HomePage.routeName),
-            leading: Icon(
-              Icons.account_circle,
-              color: Colors.deepOrange,
-            ),
-          ),
-          ListTile(
-            title: Text('Images'),
-            onTap: () {},
-            leading: Icon(
-              Icons.image,
-              color: Colors.deepOrange,
-            ),
-          ),
-          ListTile(
-            title: Text('Settings'),
-            onTap: () =>
-                Navigator.pushReplacementNamed(context, SettingsPage.routeName),
-            leading: Icon(
-              Icons.settings,
-              color: Colors.deepOrange,
-            ),
-          ),
         ],
       ),
     );
